@@ -1,0 +1,26 @@
+<%# views/bookinstance_list %>
+
+<% extend('layout', {'title': title}) %>
+
+<h1><%- title %></h1>
+<ul>
+    <% if(bookinstance_list.length > 0){ %>
+        <% bookinstance_list.forEach(function(instance){ %>
+            <li>
+                <a href="<%= instance.url %>"><%= instance.book.title %></a> : <%= instance.imprint %> -
+                <% if(instance.status === 'Available'){ %>
+                    <span class="text-success">Available</span>
+                <% }else if(instance.status === 'Maintenance'){ %>
+                    <span class="text-danger">Maintenance</span>
+                <% }else{ %>
+                    <span class="text-warning"><%= instance.status %></span>
+                <% } %>
+                <% if(instance.status !== 'Available'){ %>
+                    <span>(Due: <%= instance.due_date_formatted %> )</span>
+                <% } %>
+            </li>
+        <% }); %>
+    <% }else{ %>
+        <li>There are no book copies in this library.</li>
+    <% } %>
+</ul>
